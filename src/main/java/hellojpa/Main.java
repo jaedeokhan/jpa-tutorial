@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -43,6 +44,14 @@ public class Main {
 
             // 연관관계가 있기에 참조를 사용해서 Member에서 그대로 가져온다.
             Team findTeam = findMember.getTeam();
+            List<Member> members = findTeam.getMembers();
+            for (Member member1 : members) {
+                System.out.println("member= " + member1);
+            }
+            
+            int memberSize = members.size();
+            System.out.println("memberSize = " + memberSize);
+            
             // Member의 ManyToOne의 TYPE을 LAZY 즉 지연로딩으로 해주면 Member만 가져온다.
             // 지연로딩에서 가져오려면 Team을 터치해주면 가져온다.
             findTeam.getName();
