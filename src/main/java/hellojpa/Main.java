@@ -25,7 +25,7 @@ public class Main {
             Member member = new Member();
 //            member.setId(100L); // @GeneratedValue(strategy = GenerationType.AUTO) 로 설정하면 DB에서 AUTO_INCREMENT
             member.setName("hallo");
-            member.setTeamId(team.getId());
+            member.setTeam(team);
 
             em.persist(member);
 
@@ -36,10 +36,9 @@ public class Main {
 
             // 조회
             Member findMember = em.find(Member.class, member.getId());
-            Long teamId = findMember.getTeamId();
 
-            // 연관관계가 없기에 teamId로 가져와야한다.
-            Team findTeam = em.find(Team.class, team.getId());
+            // 연관관계가 있기에 참조를 사용해서 Member에서 그대로 가져온다.
+            Team findTeam = findMember.getTeam();
 
             tx.commit();
         } catch (Exception e){
