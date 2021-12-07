@@ -13,7 +13,7 @@ public class Member {
     private String name;
     private int age;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // EAGER는 즉시, 현업에서는 LAZY를 권장
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 

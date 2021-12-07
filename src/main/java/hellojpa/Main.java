@@ -29,6 +29,10 @@ public class Main {
 
             em.persist(member);
 
+            // 내부에서 캐싱을 하기에 해당 설정을 해주지 않으면 SELECT 쿼리가 보이지 않는다.
+            em.flush(); // DB 쿼리를 보낸다.
+            em.clear(); // 캐시를 날린다.
+
             // 객체를 테이블에 맞추어 모델링을 하면(각각의 외래키들을 그냥 만들어준다면)
             //  => 멤버를 불러오고, 멤버에 teamId를 이용해서 다시한 번 Team을 조회해야한다.
             // ** 객체 지향적인 방법이 아니다!! **
@@ -39,6 +43,9 @@ public class Main {
 
             // 연관관계가 있기에 참조를 사용해서 Member에서 그대로 가져온다.
             Team findTeam = findMember.getTeam();
+            // Member의 ManyToOne의 TYPE을 LAZY 즉 지연로딩으로 해주면 Member만 가져온다.
+            // 지연로딩에서 가져오려면 Team을 터치해주면 가져온다.
+            findTeam.getName();
 
             tx.commit();
         } catch (Exception e){
