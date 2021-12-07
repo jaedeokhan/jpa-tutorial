@@ -9,15 +9,12 @@ public class Member {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "USERNAME", nullable = false, length = 20) // 필드와 매핑할 테이블의 컬럼 이름
+    @Column(name = "USERNAME") // 필드와 매핑할 테이블의 컬럼 이름
     private String name;
     private int age;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date regDate;
-
-    @Enumerated(EnumType.STRING) // 현업에서는 무조건 STRING으로 줘야한다. ORDINAL로 주면 번호로 값이 설정된다.
-    private MemberType memberType;
+    @Column(name = "TEAM_ID")
+    private Long teamId;
 
     public Long getId() {
         return id;
@@ -43,19 +40,11 @@ public class Member {
         this.age = age;
     }
 
-    public Date getRegDate() {
-        return regDate;
+    public Long getTeamId() {
+        return teamId;
     }
 
-    public void setRegDate(Date regDate) {
-        this.regDate = regDate;
-    }
-
-    public MemberType getMemberType() {
-        return memberType;
-    }
-
-    public void setMemberType(MemberType memberType) {
-        this.memberType = memberType;
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
     }
 }
