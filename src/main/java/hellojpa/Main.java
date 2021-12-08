@@ -26,9 +26,12 @@ public class Main {
             Member member = new Member();
 //            member.setId(100L); // @GeneratedValue(strategy = GenerationType.AUTO) 로 설정하면 DB에서 AUTO_INCREMENT
             member.setName("hallo");
-            member.setTeam(team);
+//            member.setTeam(team);
 
             em.persist(member);
+            // 연관관계에서 가장 많이 하는 실수 => 연관관계의 주인에 값을 입력하지 않음!!
+            team.getMembers().add(member);
+
 
             // 내부에서 캐싱을 하기에 해당 설정을 해주지 않으면 SELECT 쿼리가 보이지 않는다.
             em.flush(); // DB 쿼리를 보낸다.
@@ -40,21 +43,21 @@ public class Main {
             // 객체를 테이블에 맞추어 데이터 중심으로 모델링하면, 협력 관계를 만들 수 없다.
 
             // 조회
-            Member findMember = em.find(Member.class, member.getId());
+//            Member findMember = em.find(Member.class, member.getId());
 
             // 연관관계가 있기에 참조를 사용해서 Member에서 그대로 가져온다.
-            Team findTeam = findMember.getTeam();
-            List<Member> members = findTeam.getMembers();
-            for (Member member1 : members) {
-                System.out.println("member= " + member1);
-            }
-            
-            int memberSize = members.size();
-            System.out.println("memberSize = " + memberSize);
-            
+//            Team findTeam = findMember.getTeam();
+//            List<Member> members = findTeam.getMembers();
+//            for (Member member1 : members) {
+//                System.out.println("member= " + member1);
+//            }
+//
+//            int memberSize = members.size();
+//            System.out.println("memberSize = " + memberSize);
+
             // Member의 ManyToOne의 TYPE을 LAZY 즉 지연로딩으로 해주면 Member만 가져온다.
             // 지연로딩에서 가져오려면 Team을 터치해주면 가져온다.
-            findTeam.getName();
+//            findTeam.getName();
 
             tx.commit();
         } catch (Exception e){
