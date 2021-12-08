@@ -24,14 +24,14 @@ public class Main {
             em.persist(team);
 
             Member member = new Member();
-//            member.setId(100L); // @GeneratedValue(strategy = GenerationType.AUTO) 로 설정하면 DB에서 AUTO_INCREMENT
             member.setName("hallo");
-//            member.setTeam(team);
 
             em.persist(member);
             // 연관관계에서 가장 많이 하는 실수 => 연관관계의 주인에 값을 입력하지 않음!!
-            team.getMembers().add(member);
-
+//            team.getMembers().add(member);
+            // member에서 setTeam()을 하면 정상적으로 TEAM_ID가 UPDATE된다.
+            // 현재 member 객체가 주인이기에 가능!
+            member.setTeam(team);
 
             // 내부에서 캐싱을 하기에 해당 설정을 해주지 않으면 SELECT 쿼리가 보이지 않는다.
             em.flush(); // DB 쿼리를 보낸다.
